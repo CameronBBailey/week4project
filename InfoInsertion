@@ -1,0 +1,109 @@
+
+CREATE OR REPLACE FUNCTION add_customer(_customer_id INTEGER, 
+	_first_name VARCHAR, 
+	_last_name VARCHAR,
+	_phone_num VARCHAR,
+	_address VARCHAR,
+	_billing_info VARCHAR
+)
+RETURNS void 
+AS $MAIN$
+BEGIN
+	INSERT INTO customer
+	VALUES(_customer_id, _first_name, _last_name, _phone_num, _address, _billing_info);
+	
+END;
+$MAIN$
+LANGUAGE plpgsql;
+	
+SELECT add_customer(1, 'Alex', 'Sharma', '222-444-2424', '2 Carl lane', '2424-2424-2424-2424');	
+SELECT add_customer(2, 'Rasen', 'Kage', '222-444-2424', '2 League of legends Ave', '2424-2424-2424-2423');	
+CREATE OR REPLACE FUNCTION add_car(
+	_serial_number INTEGER,
+	_make VARCHAR,
+	_model VARCHAR,
+	_year INTEGER
+)
+RETURNS void
+AS $MAIN$
+BEGIN
+	INSERT INTO manufacturedcar
+	VALUES(_serial_number, _make, _model, _year);
+
+END;
+$MAIN$
+LANGUAGE plpgsql;
+			
+
+SELECT add_car(12345678, 'Tesla', 'Model S', 2020);
+SELECT add_car(12345679, 'Ford', 'Explorer', 2016);
+
+SELECT *
+FROM customer
+
+SELECT *
+FROM manufacturedcar
+
+INSERT INTO salesperson (salesperson_id, first_name, last_name)
+VALUES (1, 'Kenny', 'Lin');
+
+INSERT INTO salesperson (salesperson_id, first_name, last_name)
+VALUES (2, 'Cameron', 'Bailey');
+
+SELECT *
+FROM salesperson
+
+INSERT INTO dealershipcar (car_id,serial_number,status, salesperson_id, customer_id)
+VALUES (1, 12345678, TRUE, 1, 1);
+
+INSERT INTO dealershipcar (car_id,serial_number,status, salesperson_id, customer_id)
+VALUES (2, 12345679, TRUE, 1, 2);
+
+SELECT *
+FROM dealershipcar
+
+INSERT INTO invoice (invoice_id, invoice_num, price, car_id, salesperson_id, customer_id)
+VALUES (1, 1, 50000.00, 1, 1, 1);
+
+INSERT INTO invoice (invoice_id, invoice_num, price, car_id, salesperson_id, customer_id)
+VALUES (2, 2, 30000.00, 2, 1, 2);
+
+SELECT *
+FROM invoice
+
+INSERT INTO mechanic (mechanic_id, first_name, last_name)
+VALUES (1, 'Ohad', 'Aharoni');
+
+INSERT INTO mechanic (mechanic_id, first_name, last_name)
+VALUES (2, 'Chris', 'Syers');
+
+SELECT *
+FROM mechanic
+
+INSERT INTO service (service_id, service, price, mechanic_id)
+VALUES (1, 'Tire change', 300, 1);
+
+INSERT INTO service (service_id, service, price, mechanic_id)
+VALUES (2, 'Engine change', 3000, 2);
+
+SELECT *
+FROM service
+
+
+INSERT INTO part (part_id, service_id, part_name, part_quantity, price)
+VALUES (32, 1, 'tire', 4, 200);
+
+INSERT INTO part (part_id, service_id, part_name, part_quantity, price)
+VALUES (19, 2, 'Engine', 1, 2000);
+
+SELECT *
+FROM part
+
+INSERT INTO service_ticket(service_ticket_id, service_id, price, part_id, customer_id, serial_number)
+VALUES (1, 1, 400, 32, 1, 12345678);
+
+INSERT INTO service_ticket(service_ticket_id, service_id, price, part_id, customer_id, serial_number)
+VALUES (2, 2, 2000, 19, 2, 12345679);
+
+SELECT *
+FROM service_ticket
